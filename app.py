@@ -111,6 +111,13 @@ def processRequest(req):
         topo = parameters.get("Topologies")
         res = p2p_inf(topo)
 
+    elif req.get("result").get("action")=="layer_intent":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        layer = parameters.get("layer")
+        info = parameters.get("Information")
+        res = p2p_inf(topo)
+
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
         #parameters = result.get("parameters")
@@ -129,6 +136,46 @@ def makeYqlQuery(req):
         return None
 
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+
+def layer_intent(layer, info):
+    layerdef = {'physical layer':'The physical layer handels mechanical and electrical/optical linkage. It converts logical symbols into electrical(optical) ones and measures optical signals to reconstruct logical symbols', 
+    'data link layer':'The data link layer covers transmission errors and handels media access. It is also concerned with congestion control.', 
+    'network layer':'On the network layer paths from senders to recipients are chosen. Hence this layer also has to cope with heterogenius subnets and is responsibe for accounting.',
+    'transport layer':'The transport layer offers secure end-to-end-communication between processes. Therefore it is also in charge for data stream control between endsystems. A few concerns of this layer are multiplexing, segmentation and acknowledgements in order to provide reliable transmission.',
+    'session layer':'The name of this layer almost gives all its functionalities away! It mostly deals with communication managment, dialog control and synchronization.',
+    'presentation layer':'Converting between dataformats, compression and decrompession as well as encryption are the main converns of the presentation layer.',
+    'application layer':'Its name almost tells it all. The application layer handels communication between applications and deals with application specific services like e-mail, telnet etc.',
+    'layer':'Alright! Layers basically are subdivisions of communication models. A Layer basically is a collection of similar functions that provide services to the layer above it and receives services from the layer below it.',
+    'internet':'The internet layer has the same responsabilites as the third layer of the OSI model (which would be the network layer).',
+    'link':'The link layer corresponds to the OSI model layers 1 and 2 (physical layer and data link layer).',
+    'layer':'Alright layer general it is! Layers are a way of sub-dividing a communications system further into smaller parts called layers. A layer is a collection of similar functions that provide services to the layer above it and receives services from the layer below it. On each layer, an instance provides services to the instances at the layer above and requests service from the layer below. They can be subsumed to models like the OSI or TCP/IP model.'}
+
+    layermodel = {'osi-layers':'The layers of the OSI model are (from lowest level to highest) - 1 physical layer - 2 data link layer - 3 network layer - 4 transport layer - 5 session layer - 6 presentation layer - 7 application layer \n Would you like to know more about a specific layer?',
+                    'tcpip-layers':'There are 4 layers in the TCP/IP model. Those would be (from lowest to highest) - 1 Link - 2 Internet - 3 Transport - 4 Application \n Would you like to hear more about a specific layer?'}
+
+    if layer in layerdef:
+        speech = layerdef[layer]
+    elif layer in layermodel:
+        speech = layermodel[layer]
+        contextOut = "layer_model"
+        return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": contextOut,
+        "source": "apiai-weather-webhook-sample"
+    }
+
+    speech = speech + "\nWould you like to hear more?"
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": ["layer_conversation"],
+        "source": "apiai-weather-webhook-sample"
+    }
+
+
 
 def p2p_inf(topo):
     topodef = {'p2pv1':'Every node of the overlay knows k > 2 other nodes. Data gets flooded over the edges and every node contains every information.',
