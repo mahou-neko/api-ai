@@ -170,8 +170,8 @@ def layerintent(layer, info):
     if info in model_defs:
         speech = model_defs[info]
         contextname = "layer_model"
-    if info is "difference":
-        contextname = 'layer_difference_more'
+        if info is "difference":
+            contextname = "layer_difference_more"
 
     return {
         "speech": speech,
