@@ -157,15 +157,12 @@ def layerintent(layer, info):
                     'difference':'When it comes to general reliability, TCP/IP is considered to be a more reliable option as opposed to OSI model. The OSI model is, in most cases, referred to as a reference tool, being the older of the two models. OSI is also known for its strict protocol and boundaries. This is not the case with TCP/IP. It allows for a loosening of the rules, provided the general guidelines are met. Would you like to hear more?'}
 
     if layer in layerdef:
-        speech = layerdef[layer] + "Would you like to hear more? ☺️" 
+        speech = layerdef[layer] + " Would you like to hear more? ☺️" 
         contextname = "layer_conversation"
     elif layer in layermodel:
-        speech = layermodel[layer] + "Shall I tell you more about the layers of the specific model? ☺️" 
+        speech = layermodel[layer] + " Shall I tell you more about the layers of the specific model? ☺️" 
         contextname = "layer_model"
-    elif info == "types":
-        speech = model_defs[info]
-        contextname = "layer_model"
-    elif info == "difference" and layer in layermodel:
+    elif info in model_defs:
         speech = model_defs[info]
         contextname = "layer_model"
     else:
