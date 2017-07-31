@@ -154,18 +154,21 @@ def layerintent(layer, info):
                     'tcpip-layers':'There are 4 layers in the TCP/IP model. Those would be (from lowest to highest) - 1 Link - 2 Internet - 3 Transport - 4 Application. Would you like to hear more about a specific layer?'}
 
     if layer in layerdef:
-        speech = layerdef[layer]
-        contextOut = "layer_conversation"
+        speech = layerdef[layer] + "Would you like to hear more? ☺️" 
+        contextname = "layer_conversation"
     elif layer in layermodel:
-        speech = layermodel[layer]
-        contextOut = "layer_model"
+        speech = layermodel[layer] + "Shall I tell you more about the layers of the specific model? ☺️" 
+        contextname = "layer_model"
+    else:
+        return "followupEvent":{"name":"fallback_trigger","data":{" ":" "}}
+        #speech = "I am sorry, but I don't know about the " + layer + ". Shall I ask someone and get back to you once I know more?" 
+        #contextname = "ask_help"
 
-    speech = speech + "\nWould you like to hear more? ☺️" 
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        #"contextOut": contextOut,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer}}],
         "source": "apiai-weather-webhook-sample"
     }
 
