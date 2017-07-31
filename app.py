@@ -162,7 +162,8 @@ def layerintent(layer, info):
     elif layer in layermodel:
         speech = layermodel[layer] + " Shall I tell you more about the layers of the specific model? ☺️" 
         contextname = "layer_model"
-    elif info in model_defs:
+
+    if info in model_defs:
         speech = model_defs[info]
         contextname = "layer_model"
     else:
