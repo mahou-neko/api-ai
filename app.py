@@ -160,7 +160,7 @@ def layerintent(layer, info):
         speech = layermodel[layer] + "Shall I tell you more about the layers of the specific model? ☺️" 
         contextname = "layer_model"
     else:
-        return "followupEvent":{"name":"fallback_trigger","data":{" ":" "}}
+        return {"followupEvent":{"name":"fallback_trigger","data":{" ":" "}}}
         #speech = "I am sorry, but I don't know about the " + layer + ". Shall I ask someone and get back to you once I know more?" 
         #contextname = "ask_help"
 
