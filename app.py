@@ -155,23 +155,17 @@ def layer_intent(layer, info):
 
     if layer in layerdef:
         speech = layerdef[layer]
+        contextOut = layer_conversation
     elif layer in layermodel:
         speech = layermodel[layer]
         contextOut = "layer_model"
-        return { 
-        "speech": speech,
-        "displayText": speech,
-        # "data": data,
-        "contextOut": contextOut,
-        "source": "apiai-weather-webhook-sample"
-    }
 
     speech = speech + " Would you like to hear more?"
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": ["layer_conversation"],
+        #"contextOut": contextOut,
         "source": "apiai-weather-webhook-sample"
     }
 
