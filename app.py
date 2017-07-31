@@ -153,11 +153,20 @@ def layerintent(layer, info):
     layermodel = {'osi-layers':'The layers of the OSI model are (from lowest level to highest) - 1 physical layer - 2 data link layer - 3 network layer - 4 transport layer - 5 session layer - 6 presentation layer - 7 application layer. Would you like to know more about a specific layer?',
                     'tcpip-layers':'There are 4 layers in the TCP/IP model. Those would be (from lowest to highest) - 1 Link - 2 Internet - 3 Transport - 4 Application. Would you like to hear more about a specific layer?'}
 
+    model_defs = {'types':'There are 7 layers in the OSI model and 4 in the TCP/IP model. Which one would you like to learn more about?',
+                    'difference':'When it comes to general reliability, TCP/IP is considered to be a more reliable option as opposed to OSI model. The OSI model is, in most cases, referred to as a reference tool, being the older of the two models. OSI is also known for its strict protocol and boundaries. This is not the case with TCP/IP. It allows for a loosening of the rules, provided the general guidelines are met. Would you like to hear more?'}
+
     if layer in layerdef:
         speech = layerdef[layer] + "Would you like to hear more? ☺️" 
         contextname = "layer_conversation"
     elif layer in layermodel:
         speech = layermodel[layer] + "Shall I tell you more about the layers of the specific model? ☺️" 
+        contextname = "layer_model"
+    elif info == "types":
+        speech = model_defs[info]
+        contextname = "layer_model"
+    elif info == "difference" and layer in layermodel:
+        speech = model_defs[info]
         contextname = "layer_model"
     else:
         return {"followupEvent":{"name":"fallback_trigger","data":{" ":" "}}}
@@ -168,7 +177,7 @@ def layerintent(layer, info):
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer}}],
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer,"info":info}}],
         "source": "apiai-weather-webhook-sample"
     }
 
