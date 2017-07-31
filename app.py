@@ -163,16 +163,15 @@ def layerintent(layer, info):
     elif layer in layermodel:
         speech = layermodel[layer] + " Shall I tell you more about the layers of the specific model? ☺️" 
         contextname = "layer_model"
-
+    else:
+        return {"followupEvent":{"name":"fallback_trigger","data":{" ":" "}}}
+        #speech = "I am sorry, but I don't know about the " + layer + ". Shall I ask someone and get back to you once I know more?" 
+        #contextname = "ask_help"
     if info in model_defs:
         speech = model_defs[info]
         contextname = "layer_model"
         if info == "difference":
             contextname = 'layer_difference_more'
-    else:
-        return {"followupEvent":{"name":"fallback_trigger","data":{" ":" "}}}
-        #speech = "I am sorry, but I don't know about the " + layer + ". Shall I ask someone and get back to you once I know more?" 
-        #contextname = "ask_help"
 
     return {
         "speech": speech,
