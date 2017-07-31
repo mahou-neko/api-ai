@@ -160,10 +160,10 @@ def layerintent(layer, info):
         speech = layermodel[layer]
         contextOut = "layer_model"
 
-    speech = speech + " Would you like to hear more? ☺️" 
+    displayText = speech + "\nWould you like to hear more? ☺️" 
     return {
         "speech": speech,
-        "displayText": speech + "\n ☺️",
+        "displayText": displayText,
         # "data": data,
         #"contextOut": contextOut,
         "source": "apiai-weather-webhook-sample"
