@@ -116,7 +116,7 @@ def processRequest(req):
         parameters = result.get("parameters")
         layer = parameters.get("layer")
         info = parameters.get("Information")
-        res = p2p_inf(topo)
+        res = layer_intent(layer,info)
 
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
