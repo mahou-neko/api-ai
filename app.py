@@ -154,7 +154,8 @@ def layerintent(layer, info):
                     'tcpip-layers':'There are 4 layers in the TCP/IP model. Those would be (from lowest to highest) - 1 Link - 2 Internet - 3 Transport - 4 Application. Would you like to hear more about a specific layer?'}
 
     model_defs = {'types':'There are 7 layers in the OSI model and 4 in the TCP/IP model. Which one would you like to learn more about?',
-                    'difference':'When it comes to general reliability, TCP/IP is considered to be a more reliable option as opposed to OSI model. The OSI model is, in most cases, referred to as a reference tool, being the older of the two models. OSI is also known for its strict protocol and boundaries. This is not the case with TCP/IP. It allows for a loosening of the rules, provided the general guidelines are met. Would you like to hear more?'}
+                    'difference':'When it comes to general reliability, TCP/IP is considered to be a more reliable option as opposed to OSI model. The OSI model is, in most cases, referred to as a reference tool, being the older of the two models. OSI is also known for its strict protocol and boundaries. This is not the case with TCP/IP. It allows for a loosening of the rules, provided the general guidelines are met. Would you like to hear more?',
+                    'more':'When it comes to the communications, TCP/IP supports only connectionless communication emanating from the network layer. OSI, on the other hand, seems to do quite well, supporting both connectionless and connection-oriented communication within the network layer. Last but not least is the protocol dependency of the two. TCP/IP is a protocol dependent model, whereas OSI is a protocol independent standard.'}
 
     if layer in layerdef:
         speech = layerdef[layer] + " Would you like to hear more? ☺️" 
@@ -166,6 +167,8 @@ def layerintent(layer, info):
     if info in model_defs:
         speech = model_defs[info]
         contextname = "layer_model"
+        if info == "difference":
+            contextname = 'layer_difference_more'
     else:
         return {"followupEvent":{"name":"fallback_trigger","data":{" ":" "}}}
         #speech = "I am sorry, but I don't know about the " + layer + ". Shall I ask someone and get back to you once I know more?" 
