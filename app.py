@@ -158,7 +158,7 @@ def layer_intent(layer, info):
     elif layer in layermodel:
         speech = layermodel[layer]
         contextOut = "layer_model"
-        return {
+        return { 
         "speech": speech,
         "displayText": speech,
         # "data": data,
