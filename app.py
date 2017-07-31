@@ -139,7 +139,7 @@ def makeYqlQuery(req):
 
 def layerintent(layer, info):
     layerdef = {'physical layer':'The physical layer handels mechanical and electrical/optical linkage. It converts logical symbols into electrical(optical) ones and measures optical signals to reconstruct logical symbols', 
-    'data link layer':'The data link layer covers transmission errors and handels media access. It is also concerned with congestion control.', 
+    'data link layer':'Got it! ☺️ The data link layer covers transmission errors and handels media access. \n It is also concerned with congestion control.', 
     'network layer':'On the network layer paths from senders to recipients are chosen. Hence this layer also has to cope with heterogenius subnets and is responsibe for accounting.',
     'transport layer':'The transport layer offers secure end-to-end-communication between processes. Therefore it is also in charge for data stream control between endsystems. A few concerns of this layer are multiplexing, segmentation and acknowledgements in order to provide reliable transmission.',
     'session layer':'The name of this layer almost gives all its functionalities away! It mostly deals with communication managment, dialog control and synchronization.',
@@ -160,7 +160,7 @@ def layerintent(layer, info):
         speech = layermodel[layer]
         contextOut = "layer_model"
 
-    speech = speech + " Would you like to hear more?"
+    speech = speech + " Would you like to hear more? ☺️" 
     return {
         "speech": speech,
         "displayText": speech,
