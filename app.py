@@ -165,7 +165,7 @@ def layerintent(layer, info):
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": contextOut,
+        #"contextOut": contextOut,
         "source": "apiai-weather-webhook-sample"
     }
 
