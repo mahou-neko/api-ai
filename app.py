@@ -116,7 +116,7 @@ def processRequest(req):
         parameters = result.get("parameters")
         layer = parameters.get("layer")
         info = parameters.get("Information")
-        res = layer_intent(layer,info)
+        res = layerintent(layer,info)
 
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
@@ -137,7 +137,7 @@ def makeYqlQuery(req):
 
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
-def layer_intent(layer, info):
+def layerintent(layer, info):
     layerdef = {'physical layer':'The physical layer handels mechanical and electrical/optical linkage. It converts logical symbols into electrical(optical) ones and measures optical signals to reconstruct logical symbols', 
     'data link layer':'The data link layer covers transmission errors and handels media access. It is also concerned with congestion control.', 
     'network layer':'On the network layer paths from senders to recipients are chosen. Hence this layer also has to cope with heterogenius subnets and is responsibe for accounting.',
@@ -150,12 +150,12 @@ def layer_intent(layer, info):
     'link':'The link layer corresponds to the OSI model layers 1 and 2 (physical layer and data link layer).',
     'layer':'Alright layer general it is! Layers are a way of sub-dividing a communications system further into smaller parts called layers. A layer is a collection of similar functions that provide services to the layer above it and receives services from the layer below it. On each layer, an instance provides services to the instances at the layer above and requests service from the layer below. They can be subsumed to models like the OSI or TCP/IP model.'}
 
-    layermodel = {'osi-layers':'The layers of the OSI model are (from lowest level to highest) - 1 physical layer - 2 data link layer - 3 network layer - 4 transport layer - 5 session layer - 6 presentation layer - 7 application layer \n Would you like to know more about a specific layer?',
-                    'tcpip-layers':'There are 4 layers in the TCP/IP model. Those would be (from lowest to highest) - 1 Link - 2 Internet - 3 Transport - 4 Application \n Would you like to hear more about a specific layer?'}
+    layermodel = {'osi-layers':'The layers of the OSI model are (from lowest level to highest) - 1 physical layer - 2 data link layer - 3 network layer - 4 transport layer - 5 session layer - 6 presentation layer - 7 application layer. Would you like to know more about a specific layer?',
+                    'tcpip-layers':'There are 4 layers in the TCP/IP model. Those would be (from lowest to highest) - 1 Link - 2 Internet - 3 Transport - 4 Application. Would you like to hear more about a specific layer?'}
 
     if layer in layerdef:
         speech = layerdef[layer]
-        contextOut = layer_conversation
+        contextOut = "layer_conversation"
     elif layer in layermodel:
         speech = layermodel[layer]
         contextOut = "layer_model"
@@ -165,7 +165,7 @@ def layer_intent(layer, info):
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        #"contextOut": contextOut,
+        "contextOut": contextOut,
         "source": "apiai-weather-webhook-sample"
     }
 
