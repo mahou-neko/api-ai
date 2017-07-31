@@ -166,7 +166,7 @@ def layer_intent(layer, info):
         "source": "apiai-weather-webhook-sample"
     }
 
-    speech = speech + "\nWould you like to hear more?"
+    speech = speech + " Would you like to hear more?"
     return {
         "speech": speech,
         "displayText": speech,
