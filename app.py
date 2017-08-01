@@ -161,7 +161,7 @@ def layerintent(layer, info):
         speech = layerdef[layer] + " Would you like to hear more? ☺️" 
         contextname = "layer_conversation"
     elif layer in layermodel:
-        speech = layermodel[layer] + " Shall I tell you more about the layers of the specific model? ☺️" 
+        speech = layermodel[layer] + " Shall I tell you more about the layers of the specific model? ☺️" #add for yes followup custom hear more
         contextname = "layer_model"
     else:
         return {"followupEvent":{"name":"fallback_trigger","data":{" ":" "}}}
@@ -171,10 +171,12 @@ def layerintent(layer, info):
         speech = model_defs[info]
         contextname = "layer_model"
         if info == "difference":
-            contextname = "layer_difference_more"
+            contextname = "layer_more"
 
     if info == "more":
         speech = "Okay! Here comes more about the " + layer + " 😎"
+        #could set context here for spevific more for looping information
+        #should be in its own more function
 
     return {
         "speech": speech,
@@ -184,6 +186,8 @@ def layerintent(layer, info):
         "source": "apiai-weather-webhook-sample"
     }
 
+#def more_about_layer
+#redesign for general follow-up
 def layer_more(layer, info):
     model_defs = {'types':'There are 7 layers in the OSI model and 4 in the TCP/IP model. Which one would you like to learn more about?',
                     'difference':'When it comes to general reliability, TCP/IP is considered to be a more reliable option as opposed to OSI model. The OSI model is, in most cases, referred to as a reference tool, being the older of the two models. OSI is also known for its strict protocol and boundaries. This is not the case with TCP/IP. It allows for a loosening of the rules, provided the general guidelines are met. Would you like to hear more?',
