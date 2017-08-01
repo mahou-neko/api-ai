@@ -172,8 +172,8 @@ def modelintent(model,info):
         elif model == "model":
             speech = "Which one would you like to hear more about? 😎"
     if info == "difference":
-        info = "moreD"
         speech = model_defs[info] #define own return here with layer contexts
+        info = "moreD"
     #info = "more"
     return {
         "speech": speech,
