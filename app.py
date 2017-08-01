@@ -151,6 +151,8 @@ def modelintent(model,info):
 
     if model in model_defs:
         speech = model_defs[model]
+    else:
+        speech = "I am terribly sorry... but I am not sure about the " + model + "model... Would you like me to ask someone and get back to you? 😊"
 
     if model != "model": #could be expanded to specific model questions and more about one model
         speech = speech + " Shall I tell you more about the layers of the " + model + " model 😊?"
@@ -220,7 +222,7 @@ def layerintent(layer, info):
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer,"info":info}}],
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer,"info":info}},{"name":"Layer-followup","lifespan":3,"parameters":{}}],
         "source": "apiai-weather-webhook-sample"
     }
 
