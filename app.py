@@ -171,8 +171,8 @@ def modelintent(model,info):
         elif model == "model":
             speech = "Which one would you like to hear more about? 😎"
     if info == "difference":
-        return layerintent("ois-layers","difference")
         info = "more"
+        return layerintent("ois-layers","difference")
     #info = "more"
     return {
         "speech": speech,
