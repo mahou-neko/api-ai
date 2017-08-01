@@ -148,7 +148,8 @@ def modelintent(model,info):
     model_defs = {'TCP/IP':'Alright 😊 The Internet protocol suite provides end-to-end data communication specifying how data should be packetized, addressed, transmitted, routed and received. This functionality is organized into four abstraction layers which are used to sort all related protocols according to the scope of networking involved.',
                     'OSI':'Got cha! 😎 The Open Systems Interconnection model (OSI model) is a conceptual model that characterizes and standardizes the communication functions of a telecommunication or computing system without regard to their underlying internal structure and technology. Its goal is the interoperability of diverse communication systems with standard protocols. The model partitions a communication system into abstraction layers. The original version of the model defined seven layers.',
                     'model':'There are two types of conceptual models which are used on the Internet and similar comupter networks to facilitate communication and offer services. One would be the TCP/IP model and the other would be the OSI model. 😊',
-                    'more':'When it comes to the communications, TCP/IP supports only connectionless communication emanating from the network layer. OSI, on the other hand, seems to do quite well, supporting both connectionless and connection-oriented communication within the network layer. Last but not least is the protocol dependency of the two. TCP/IP is a protocol dependent model, whereas OSI is a protocol independent standard.'}
+                    'difference':'When it comes to general reliability, TCP/IP is considered to be a more reliable option as opposed to OSI model. The OSI model is, in most cases, referred to as a reference tool, being the older of the two models. OSI is also known for its strict protocol and boundaries. This is not the case with TCP/IP. It allows for a loosening of the rules, provided the general guidelines are met. Would you like to hear more?',
+                    'moreD':'When it comes to the communications, TCP/IP supports only connectionless communication emanating from the network layer. OSI, on the other hand, seems to do quite well, supporting both connectionless and connection-oriented communication within the network layer. Last but not least is the protocol dependency of the two. TCP/IP is a protocol dependent model, whereas OSI is a protocol independent standard.'}
 
     if model in model_defs:
         speech = model_defs[model]
@@ -171,8 +172,8 @@ def modelintent(model,info):
         elif model == "model":
             speech = "Which one would you like to hear more about? 😎"
     if info == "difference":
-        info = "more"
-        return layerintent("osi-layers","difference")
+        info = "moreD"
+        speech = model_defs[info] #define own return here with layer contexts
     #info = "more"
     return {
         "speech": speech,
