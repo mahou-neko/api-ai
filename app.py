@@ -199,9 +199,22 @@ def protocolintent(prot,info,addinfo):
 
     if addinfo == "moreAcro":
         speech = protocol_defs[prot]
+        return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"protocols":prot,"info":info,"addInfo":addinfo}}],
+        "source": "apiai-weather-webhook-sample"
+        }
     if addinfo == "moreSpecific":
         speech = "I can tell you about advantages, issues, alternatives and differences of protocols. What would you like to know more about?"
-
+        return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"protocols":prot,"info":info,"addInfo":addinfo}}],
+        "source": "apiai-weather-webhook-sample"
+        }
     if info == "acronym":
         if prot in prot_acro:
             speech = prot_acro[prot] + " Would you like to hear more? 😊"
