@@ -181,8 +181,8 @@ def congestionintent(cong,info,layer,addinfo):
         speech = cong_defs[addinfo]
     if layer in cong_defs:
         speech = cong_defs[layer]
-    else:
-        speech = "Sorry... I guess this topic slipped my mind... I can ask someone who'll know more if you'd like me too!"
+    #else:
+        #speech = "Sorry... I guess this topic slipped my mind... I can ask someone who'll know more if you'd like me too!"
 
     contextname = "congestion_conversation"
     addinfo = "moreRed" #expand to other answers
