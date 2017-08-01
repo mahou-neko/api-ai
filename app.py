@@ -254,7 +254,7 @@ def modelintent(model,info,addinfo):
 
     #own speech return might be better!
     if addinfo == "moreD":
-        speech = model_defs[info] #just in model_defs[info] would be cleaner - also use addintional info for more extraction
+        speech = model_defs[addinfo] #just in model_defs[info] would be cleaner - also use addintional info for more extraction
         return {
             "speech": speech,
             "displayText": speech,
