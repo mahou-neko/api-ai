@@ -196,8 +196,8 @@ def protocolintent(prot,info,addinfo):
             speech = "Uh that's ebarassing... I am not sure about this acronym... But I can ask someone who'll know and get back to you if you'd like!"
     elif prot in protocol_defs:
         speech = protocol_defs[prot]
-        else:
-            speech = "I am terribly sorry, but I am not sure about this protocol... I could ask someone about it and get back to you - if that's okay 😊"
+    else:
+        speech = "I am terribly sorry, but I am not sure about this protocol... I could ask someone about it and get back to you - if that's okay 😊"
 
     contextname = "protocol_conversation"
     info = "more"
