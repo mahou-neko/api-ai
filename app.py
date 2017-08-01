@@ -118,6 +118,13 @@ def processRequest(req):
         info = parameters.get("Information")
         res = layerintent(layer,info)
 
+    elif req.get("result").get("action")=="model_intent":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        model = parameters.get("Models")
+        info = parameters.get("Information")
+        res = modelintent(model,info)
+
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
         #parameters = result.get("parameters")
@@ -136,6 +143,29 @@ def makeYqlQuery(req):
         return None
 
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+
+def modelintent(model,info):
+    model_defs = {'TCP/IP':'Alright 😊 The Internet protocol suite provides end-to-end data communication specifying how data should be packetized, addressed, transmitted, routed and received. This functionality is organized into four abstraction layers which are used to sort all related protocols according to the scope of networking involved.',
+                    'OSI':'Got cha! 😎 The Open Systems Interconnection model (OSI model) is a conceptual model that characterizes and standardizes the communication functions of a telecommunication or computing system without regard to their underlying internal structure and technology. Its goal is the interoperability of diverse communication systems with standard protocols. The model partitions a communication system into abstraction layers. The original version of the model defined seven layers.',
+                    'model':'There are two types of conceptual models which are used on the Internet and similar comupter networks to facilitate communication and offer services. One would be the TCP/IP model and the other would be the OSI model. 😊'}
+
+    if model in model_defs:
+        speech = model_defs[model]
+
+    if model != "model":
+        speech = speech + " Shall I tell you more about the layers of the " + model + " 😊"
+    else:
+        speech = speech + " Would you like to hear more about one of them? 😊"
+        
+    contextname = "model_conversation"
+    #info = "more"
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Models":model,"info":info}}],
+        "source": "apiai-weather-webhook-sample"
+    }
 
 def layerintent(layer, info):
     layerdef = {'physical layer':'The physical layer handels mechanical and electrical/optical linkage. It converts logical symbols into electrical(optical) ones and measures optical signals to reconstruct logical symbols', 
@@ -171,7 +201,7 @@ def layerintent(layer, info):
         speech = model_defs[info]
         contextname = "layer_model"
         if info == "difference":
-            contextname = "layer_more"
+            contextname = "layer_more" #expand this! and be carful with context -> reset!
 
     if info == "more":
         speech = "Okay! Here comes more about the " + layer + " 😎"
