@@ -189,19 +189,40 @@ def protocolintent(prot,info,addinfo):
                 'protocol':'Protocols are sets of rules which give structure and meaning to exchanged messages. They are deployed for implementing Services and are usually not distinguishable for users. Would you like to know something about services?',
                 'RPC':'RPC = Remote Procedure Call'
                 }
-    if info == "acronym":
-        if prot in prot_acro:
-            speech = prot_acro[prot]
-        else:
-            speech = "Uh that's ebarassing... I am not sure about this acronym... But I can ask someone who'll know and get back to you if you'd like!"
-    elif prot in protocol_defs:
-        speech = protocol_defs[prot]
-    else:
-        speech = "I am terribly sorry, but I am not sure about this protocol... I could ask someone about it and get back to you - if that's okay 😊"
+    prot_diff = {'IP':'The main differences between IPv4 and IPv6 consist of the checksum, the header length, fragmentation handeling and no header options for IPv6.',
+                'TCP':'There are two types of Internet Protocol (IP) traffic. They are TCP or Transmission Control Protocol and UDP or User Datagram Protocol. TCP is connection oriented – once a connection is established, data can be sent bidirectional. UDP is a simpler, connectionless Internet protocol.',
+                'UDP':'There are two types of Internet Protocol (IP) traffic. They are TCP or Transmission Control Protocol and UDP or User Datagram Protocol. TCP is connection oriented – once a connection is established, data can be sent bidirectional. UDP is a simpler, connectionless Internet protocol.'}
 
     contextname = "protocol_conversation"
     info = "more"
     addinfo = "more"
+
+    if addinfo == "moreAcro":
+        speech = protocol_defs[prot]
+    if addinfo == "moreSpecific":
+        speech = "I can tell you about advantages, issues, alternatives and differences of protocols. What would you like to know more about?"
+
+    if info == "acronym":
+        if prot in prot_acro:
+            speech = prot_acro[prot] + " Would you like to hear more? 😊"
+            addinfo = "moreAcro" #reset info maybe
+        else:
+            speech = "That's ebarassing... I am not sure about this acronym... But I can ask someone who'll know and get back to you if you'd like!"
+    elif prot in protocol_defs:
+        speech = protocol_defs[prot] + " Would you like to know something specific about " + prot + " ? 😊"
+        addinfo = "moreSpecific"
+    else:
+        speech = "I am terribly sorry, but I am not sure about this protocol... I could ask someone about it and get back to you - if that's okay 😊"
+
+    #change advantages, issues, alternatives to dic. here
+    if info == "advantages" and prot in prot_acro:
+        speech = prot_advantages(prot)
+    if info == "issues" and prot in prot_acro:
+        speech = prot_disadvantages(prot)
+    if info == "alternatives" and prot in prot_acro:
+        speech = prot_alternatives(prot)
+    if info == "difference" and prot in prot_diff:
+        speech = prot_diff[prot]
 
     return {
         "speech": speech,
@@ -505,6 +526,7 @@ def prot_disadvantages(prot):
                 'UDP':'Since UDP emphazises reduced latency over reliability, it is not the best option if you need your data to arrive in the correct order to guarantee correct delivery!',
                 'RPC':'I am not quite sure about RPCs disandavtages... I ll get back to you for this question though!'
                 }
+
     return protdef[prot]
 
 
