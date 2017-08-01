@@ -152,12 +152,20 @@ def modelintent(model,info):
     if model in model_defs:
         speech = model_defs[model]
 
-    if model != "model":
-        speech = speech + " Shall I tell you more about the layers of the " + model + " 😊"
+    if model != "model": #could be expanded to specific model questions and more about one model
+        speech = speech + " Shall I tell you more about the layers of the " + model + " model 😊?"
     else:
         speech = speech + " Would you like to hear more about one of them? 😊"
-        
+
     contextname = "model_conversation"
+
+    if info == "more":
+        if model == "TCP/IP": #set different context
+            return layerintent("tcpip-layers","general")
+        elif model == "OSI":
+            return layerintent("osi-layers","general")
+        elif model == "model":
+            speech = "Which one would you like to hear more about? 😎"
     #info = "more"
     return {
         "speech": speech,
