@@ -159,6 +159,7 @@ def congestionintent(cong,info,layer,addinfo):
                     'data link layer':'Alright! Layer 2 - the data link layer -  it is! 😊 Congestion Control on the second layer deals with media access control by avoiding, detecting and resolving collisions. Would you like to know more about that?',
                     'more2':'Got it! 😎 On the data link layer congestion control is deployed via ALOHA, S-ALOHA and CSMA/CD as well as CSMA/CA. Would you like to hear more?',
                     'more22':'Great! Which access method would you like to learn more about?',
+                    'moreCG':'Awesome! 😊 Would you like to hear more about layer 2 or layer 4 congestion control?',
                     'types' : 'On the data link layer congestion control is deployed via ALOHA, S-ALOHA and CSMA/CD as well as CSMA/CA. Methods for congestion avoidance rank from slower (preventive) to fast (reactive) approaches. From preventive to reactive those approaches would be: expanding -  redirecting - access control - choking - rejecting. The  most commonly used congestion control methods are Reno and Tahoe in combination with TCP.',
                     'moreRed':'In the conventional tail drop algorithm, a router or other network component buffers as many packets as it can, and simply drops the ones it cannot buffer. If buffers are constantly full, the network is congested. Tail drop distributes buffer space unfairly among traffic flows. Tail drop can also lead to TCP global synchronization as all TCP connections "hold back" simultaneously, and then step forward simultaneously. Networks become under-utilized and flooded by turns. RED addresses these issues.',
                     'transport layer':'Okay, Congestion control for the transport layer! 😎 Congestion control on the transport layer handels end-to-end congestion control. Would you like to hear more about it?',
@@ -175,17 +176,27 @@ def congestionintent(cong,info,layer,addinfo):
                     'congestion control general':'Alright 😎 Network Congestion is the reduced quality of service that occurs when a network node is carrying more data than it can handle. Typical effects include queueing delay, packet loss or the blocking of new connections. A consequence of congestion is that an incremental increase in offered load leads either only to a small increase or even a decrease in network throughput. Congestion control tries to combat this issue. Layer 2 and 4 of the OSI model are concerned with congestion control. Would you like to know more?'}
     if cong in con_methods:
         speech = con_methods[cong]
+        if cong == "congestion control general":
+            addinfo = "moreCG"
+        if cong == "RED":
+            addinfo = "moreRed"
     if info in cong_defs:
         speech = cong_defs[info]
     if addinfo in cong_defs:
         speech = cong_defs[addinfo]
+        if addinfo == "more2":
+            addinfo = "more22"
     if layer in cong_defs:
         speech = cong_defs[layer]
+        if layer == "data link layer":
+            addinfo = "more2"
+        if layer == "transport layer":
+            addinfo = "more4"
     #else:
         #speech = "Sorry... I guess this topic slipped my mind... I can ask someone who'll know more if you'd like me too!"
 
     contextname = "congestion_conversation"
-    addinfo = "moreRed" #expand to other answers
+    #addinfo = "moreRed" expand to other answers
 
     return {
         "speech": speech,
