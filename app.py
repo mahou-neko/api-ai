@@ -260,7 +260,7 @@ def modelintent(model,info):
         elif model == "model":
             speech = "Which one would you like to hear more about? 😎"
     if info == "moreD":
-        speech = model_defs[info] #just in model_defs[info] would be cleaner
+        speech = model_defs[info] #just in model_defs[info] would be cleaner - also use addintional info for more extraction
     if info == "difference":
         speech = model_defs[info] #define own return here with layer contexts
         info = "moreD"
@@ -269,7 +269,7 @@ def modelintent(model,info):
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Models":model,"info":info}}],
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Models":model,"Information":info}}],
         "source": "apiai-weather-webhook-sample"
     }
 
