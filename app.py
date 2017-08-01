@@ -159,6 +159,7 @@ def congestionintent(cong,info,layer,addinfo):
                     'data link layer':'Alright! Layer 2 - the data link layer -  it is! 😊 Congestion Control on the second layer deals with media access control by avoiding, detecting and resolving collisions. Would you like to know more about that?',
                     'more2':'Got it! 😎 On the data link layer congestion control is deployed via ALOHA, S-ALOHA and CSMA/CD as well as CSMA/CA. Would you like to hear more?',
                     'more22':'Great! Which access method would you like to learn more about?',
+                    'more44':'Cool! 😎 Would like to hear more about Reno or Tahoe or rather something about tcp congestion control?',
                     'moreCG':'Awesome! 😊 Would you like to hear more about layer 2 or layer 4 congestion control?',
                     'types' : 'On the data link layer congestion control is deployed via ALOHA, S-ALOHA and CSMA/CD as well as CSMA/CA. Methods for congestion avoidance rank from slower (preventive) to fast (reactive) approaches. From preventive to reactive those approaches would be: expanding -  redirecting - access control - choking - rejecting. The  most commonly used congestion control methods are Reno and Tahoe in combination with TCP.',
                     'moreRed':'In the conventional tail drop algorithm, a router or other network component buffers as many packets as it can, and simply drops the ones it cannot buffer. If buffers are constantly full, the network is congested. Tail drop distributes buffer space unfairly among traffic flows. Tail drop can also lead to TCP global synchronization as all TCP connections "hold back" simultaneously, and then step forward simultaneously. Networks become under-utilized and flooded by turns. RED addresses these issues.',
@@ -178,6 +179,8 @@ def congestionintent(cong,info,layer,addinfo):
         speech = cong_defs[addinfo]
         if addinfo == "more2":
             addinfo = "more22"
+        if addinfo == "more4":
+            addinfo = "more44"
     if cong in con_methods:
         speech = con_methods[cong]
         if cong == "congestion control general":
@@ -256,6 +259,8 @@ def modelintent(model,info):
             return layerintent("osi-layers","general")
         elif model == "model":
             speech = "Which one would you like to hear more about? 😎"
+    if info == "moreD":
+        speech = model_defs[info] #just in model_defs[info] would be cleaner
     if info == "difference":
         speech = model_defs[info] #define own return here with layer contexts
         info = "moreD"
