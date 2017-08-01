@@ -175,15 +175,17 @@ def congestionintent(cong,info,layer,addinfo):
                     'congestion control general':'Alright 😎 Network Congestion is the reduced quality of service that occurs when a network node is carrying more data than it can handle. Typical effects include queueing delay, packet loss or the blocking of new connections. A consequence of congestion is that an incremental increase in offered load leads either only to a small increase or even a decrease in network throughput. Congestion control tries to combat this issue. Layer 2 and 4 of the OSI model are concerned with congestion control. Would you like to know more?'}
     if cong in con_methods:
         speech = con_methods[cong]
-    if layer in cong_defs:
-        speech = cong_defs[layer]
     if info in cong_defs:
         speech = cong_defs[info]
     if addinfo in cong_defs:
         speech = cong_defs[addinfo]
+    if layer in cong_defs:
+        speech = cong_defs[layer]
+    else:
+        speech = "Sorry... I guess this topic slipped my mind... I can ask someone who'll know more if you'd like me too!"
 
     contextname = "congestion_conversation"
-    addinfo = "moreRed"
+    addinfo = "moreRed" #expand to other answers
 
     return {
         "speech": speech,
