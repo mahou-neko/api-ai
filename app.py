@@ -179,6 +179,8 @@ def congestionintent(cong,info,layer,addinfo):
         speech = cong_defs[layer]
     if info in cong_defs:
         speech = cong_defs[info]
+    if addinfo in cong_defs:
+        speech = cong_defs[addinfo]
 
     contextname = "congestion_conversation"
     addinfo = "moreRed"
