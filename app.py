@@ -253,6 +253,15 @@ def modelintent(model,info,addinfo):
     contextname = "model_conversation"
 
     #own speech return might be better!
+    if addinfo == "moreD":
+        speech = model_defs[info] #just in model_defs[info] would be cleaner - also use addintional info for more extraction
+        return {
+            "speech": speech,
+            "displayText": speech,
+            # "data": data,
+            "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Models":model,"info":info,"addInfo":addinfo}}],
+            "source": "apiai-weather-webhook-sample"
+            }
     if info == "more":
         if model == "TCP/IP": #set different context
             return layerintent("tcpip-layers","general") #reset models followup for it to work with layers
@@ -260,8 +269,6 @@ def modelintent(model,info,addinfo):
             return layerintent("osi-layers","general")
         elif model == "model":
             speech = "Which one would you like to hear more about? 😎"
-    if addinfo == "moreD":
-        speech = model_defs[info] #just in model_defs[info] would be cleaner - also use addintional info for more extraction
     if info == "difference":
         speech = model_defs[info] #define own return here with layer contexts
         addinfo = "moreD"
