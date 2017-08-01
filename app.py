@@ -180,12 +180,14 @@ def congestionintent(cong,info,layer,addinfo):
     if info in cong_defs:
         speech = cong_defs[info]
 
+    contextname = "congestion_conversation"
+    addinfo = "moreRed"
 
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Models":model,"info":info}}],
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"congestion_control":cong,"info":info,"addInfo":addinfo}}],
         "source": "apiai-weather-webhook-sample"
     }
 
