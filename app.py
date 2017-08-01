@@ -138,7 +138,7 @@ def processRequest(req):
     elif req.get("result").get("action")=="protocol_intent":
         result = req.get("result")
         parameters = result.get("parameters")
-        prot = parameters.get("")
+        prot = parameters.get("protocols")
         info = parameters.get("Information")
         addinfo = parameters.get("addInfo")
         res = protocolintent(prot,info,addinfo)
