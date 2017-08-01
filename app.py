@@ -123,7 +123,8 @@ def processRequest(req):
         parameters = result.get("parameters")
         model = parameters.get("Models")
         info = parameters.get("Information")
-        res = modelintent(model,info)
+        addinfo = parameters.get("addInfo")
+        res = modelintent(model,info,addinfo)
 
     elif req.get("result").get("action")=="congestion_intent":
         result = req.get("result")
@@ -232,7 +233,7 @@ def congestion_addInfo(cong,info,layer,addinfo):
     }
 
 
-def modelintent(model,info):
+def modelintent(model,info,addinfo):
     model_defs = {'TCP/IP':'Alright 😊 The Internet protocol suite provides end-to-end data communication specifying how data should be packetized, addressed, transmitted, routed and received. This functionality is organized into four abstraction layers which are used to sort all related protocols according to the scope of networking involved.',
                     'OSI':'Got cha! 😎 The Open Systems Interconnection model (OSI model) is a conceptual model that characterizes and standardizes the communication functions of a telecommunication or computing system without regard to their underlying internal structure and technology. Its goal is the interoperability of diverse communication systems with standard protocols. The model partitions a communication system into abstraction layers. The original version of the model defined seven layers.',
                     'model':'There are two types of conceptual models which are used on the Internet and similar comupter networks to facilitate communication and offer services. One would be the TCP/IP model and the other would be the OSI model. 😊',
@@ -263,13 +264,13 @@ def modelintent(model,info):
         speech = model_defs[info] #just in model_defs[info] would be cleaner - also use addintional info for more extraction
     if info == "difference":
         speech = model_defs[info] #define own return here with layer contexts
-        info = "moreD"
+        addinfo = "moreD"
     #info = "more"
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Models":model,"Information":info}}],
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Models":model,"info":info,"addInfo":addinfo}}],
         "source": "apiai-weather-webhook-sample"
     }
 
