@@ -135,6 +135,14 @@ def processRequest(req):
         addinfo = parameters.get("addInfo")
         res = congestionintent(cong,info,layer,addinfo)
 
+    elif req.get("result").get("action")=="protocol_intent":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        prot = parameters.get("")
+        info = parameters.get("Information")
+        addinfo = parameters.get("addInfo")
+        res = protocolintent(prot,info,addinfo)
+
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
         #parameters = result.get("parameters")
@@ -153,6 +161,55 @@ def makeYqlQuery(req):
         return None
 
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+
+def protocolintent(prot,info,addinfo):
+    protocol_defs = {'protocol':'Protocols are sets of rules which give structure and meaning to exchanged messages. They are deployed for implementing Services and are usually not distinguishable for users. Would you like to know something about services?',
+                    'TCP':'The Transmission Control Protocol (TCP) is one of the main protocols of the Internet protocol suite. It originated in the initial network implementation in which it complemented the Internet Protocol (IP). Therefore, the entire suite is commonly referred to as TCP/IP. TCP provides reliable, ordered, and error-checked delivery of a stream of octets between applications running on hosts communicating by an IP network. Major Internet applications such as the World Wide Web, email, remote administration, and file transfer rely on TCP.',
+                    'HTTP':'The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed, collaborative, and hypermedia information systems. HTTP is the foundation of data communication for the World Wide Web. Hypertext is structured text that uses logical links (hyperlinks) between nodes containing text. HTTP is the protocol to exchange or transfer hypertext.',
+                    'SMTP':'Simple Mail Transfer Protocol (SMTP) is an Internet standard for electronic mail (email) transmission. Although electronic mail servers and other mail transfer agents use SMTP to send and receive mail messages, user-level client mail applications typically use SMTP only for sending messages to a mail server for relaying. For retrieving messages, client applications usually use either IMAP or POP3.',
+                    'IMAP':'In computing, the Internet Message Access Protocol (IMAP) is an Internet standard protocol used by e-mail clients to retrieve e-mail messages from a mail server over a TCP/IP connection. IMAP was designed with the goal of permitting complete management of an email box by multiple email clients, therefore clients generally leave messages on the server until the user explicitly deletes them.',
+                    'DNS':'The Domain Name System (DNS) is a hierarchical decentralized naming system for computers, services, or other resources connected to the Internet or a private network. It associates various information with domain names assigned to each of the participating entities. Most prominently, it translates more readily memorized domain names to the numerical IP addresses needed for locating and identifying computer services and devices with the underlying network protocols. By providing a worldwide, distributed directory service, the Domain Name System is an essential component of the functionality on the Internet, that has been in use since 1985.',
+                    'SIP':'The Session Initiation Protocol (SIP) is a communications protocol for signaling and controlling multimedia communication sessions in applications of Internet telephony for voice and video calls, in private IP telephone systems, as well as in instant messaging over Internet Protocol (IP) networks. SIP works in conjunction with several other protocols that specify and carry the session media. Media type and parameter negotiation and media setup is performed with the Session Description Protocol (SDP), which is carried as payload in SIP messages. For the transmission of media streams (voice, video) SIP typically employs the Real-time Transport Protocol (RTP) or the Secure Real-time Transport Protocol (SRTP).',
+                    'RTP':'The Real-time Transport Protocol (RTP) is a network protocol for delivering audio and video over IP networks. RTP is used extensively in communication and entertainment systems that involve streaming media, such as telephony, video teleconference applications, television services and web-based push-to-talk features. RTP typically runs over User Datagram Protocol (UDP). RTP is used in conjunction with the RTP Control Protocol (RTCP). While RTP carries the media streams (e.g., audio and video), RTCP is used to monitor transmission statistics and quality of service (QoS) and aids synchronization of multiple streams. RTP is one of the technical foundations of Voice over IP and in this context is often used in conjunction with a signaling protocol such as the Session Initiation Protocol (SIP) which establishes connections across the network.',
+                    'HTML':'Hypertext Markup Language (HTML) is the standard markup language for creating web pages and web applications. With Cascading Style Sheets (CSS) and JavaScript it forms a triad of cornerstone technologies for the World Wide Web. Web browsers receive HTML documents from a webserver or from local storage and render them into multimedia web pages. HTML describes the structure of a web page semantically and originally included cues for the appearance of the document.',
+                    'IP':'The Internet Protocol (IP) is the principal communications protocol in the Internet protocol suite for relaying datagrams across network boundaries. Its routing function enables internetworking, and essentially establishes the Internet. IP has the task of delivering packets from the source host to the destination host solely based on the IP addresses in the packet headers. For this purpose, IP defines packet structures that encapsulate the data to be delivered. It also defines addressing methods that are used to label the datagram with source and destination information.',
+                    'UDP':'In electronic communication, the User Datagram Protocol (UDP) is one of the core members of the Internet protocol suite. With UDP, computer applications can send messages, in this case referred to as datagrams, to other hosts on an Internet Protocol (IP) network. Prior communications are not required in order to set up transmission channels or data paths. UDP uses a simple connectionless transmission model with a minimum of protocol mechanism. UDP provides checksums for data integrity, and port numbers for addressing different functions at the source and destination of the datagram. It has no handshaking dialogues, and thus exposes the users program to any unreliability of the underlying network: there is no guarantee of delivery, ordering, or duplicate protection',
+                    'RPC':'n distributed computing, a remote procedure call (RPC) is when a computer program causes a procedure (subroutine) to execute in a different address space (commonly on another computer on a shared network), which is coded as if it were a normal (local) procedure call, without the programmer explicitly coding the details for the remote interaction. That is, the programmer writes essentially the same code whether the subroutine is local to the executing program, or remote. This is a form of client–server interaction (caller is client, executor is server), typically implemented via a request–response message-passing system.'
+                    }
+    prot_acro = {'TCP':'TCP = Transmission Control Protocol',
+                'HTTP':'HTTP = Hyper Text Transfer Protocol',
+                'SMTP':'SMTP = Simple Mail Transport Protocol',
+                'IMAP':'IMAP = Internet Message Access Protocol',
+                'DNS':'DNS = Domain Name System',
+                'SIP':'SIP = Session Initiation Protocol',
+                'RTP':'RTP = Real-time Transport Protocol',
+                'HTML':'HTML = Hypertext Markup Language',
+                'IP':'IP = Internet Protocol',
+                'UDP':'UDP = User Datagram Protocol',
+                'protocol':'Protocols are sets of rules which give structure and meaning to exchanged messages. They are deployed for implementing Services and are usually not distinguishable for users. Would you like to know something about services?',
+                'RPC':'RPC = Remote Procedure Call'
+                }
+    if info == "acronym":
+        if prot in prot_acro:
+            speech = prot_acro[prot]
+        else:
+            speech = "Uh that's ebarassing... I am not sure about this acronym... But I can ask someone who'll know and get back to you if you'd like!"
+    elif prot in protocol_defs:
+        speech = protocol_defs[prot]
+        else:
+            speech = "I am terribly sorry, but I am not sure about this protocol... I could ask someone about it and get back to you - if that's okay 😊"
+
+    contextname = "protocol_conversation"
+    info = "more"
+    addinfo = "more"
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"protocols":prot,"info":info,"addInfo":addinfo}}],
+        "source": "apiai-weather-webhook-sample"
+    }
 
 def congestionintent(cong,info,layer,addinfo):
     #more elaborate on methods
