@@ -173,6 +173,9 @@ def layerintent(layer, info):
         if info == "difference":
             contextname = "layer_difference_more"
 
+    if info == "more":
+        speech = "Okay! Here comes more about the " + layer + " 😎"
+
     return {
         "speech": speech,
         "displayText": speech,
