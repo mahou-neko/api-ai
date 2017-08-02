@@ -274,6 +274,7 @@ def serviceintent(service, addinfo, info):
     if addinfo == "more" and service == "service":
         speech = "Which service would you like to know more about? 😊"
         contextname = "service_conversation"
+        addinfo = "m"
         return {
         "speech": speech,
         "displayText": speech,
@@ -281,6 +282,7 @@ def serviceintent(service, addinfo, info):
         "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"service":service,"info":info,"addInfo":addinfo}}],
         "source": "apiai-weather-webhook-sample"
         }
+    #for specific information as well
 
     info = "more"
     addinfo = "more"
