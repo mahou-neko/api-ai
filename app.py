@@ -150,7 +150,7 @@ def processRequest(req):
         info = parameters.get("Information")
         addinfo = parameters.get("addInfo")
         service = parameters.get("Service")
-        res = serviceintent(info,addinfo,service)
+        res = serviceintent(service,addinfo,info)
 
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
