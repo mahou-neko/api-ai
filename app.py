@@ -215,7 +215,7 @@ def protocolintent(prot,info,addinfo,service):
         "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"protocols":prot,"info":info,"addInfo":addinfo}}],
         "source": "apiai-weather-webhook-sample"
         }
-    if addinfo == "moreSpecific":
+    if addinfo == "moreSpecific" and serice != "service":
         speech = "I can tell you about advantages, issues, alternatives and differences of protocols. What would you like to know more about?"
         addinfo = "more"
         return {
