@@ -187,6 +187,7 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
                     'moreC':'Awesome! 😎 The greatest distinction would be between public and private clouds. Public clouds are mutually used by many users while private ones are just used by one cooperation or even just one person!',
                     'networktopology':'Network topology is the arrangement of the various elements (links, nodes, etc.) of a computer network. Essentially, it is the topological structure of a network and may be depicted physically or logically. Physical topology is the placement of the various components of a network, including device location and cable installation, while logical topology illustrates how data flows within a network, regardless of its physical design. Distances between nodes, physical interconnections, transmission rates, or signal types may differ between two networks, yet their topologies may be identical.',
                     'distributed system':'A distributed system is a model in which components located on networked computers communicate and coordinate their actions by passing messages. The components interact with each other in order to achieve a common goal. Three significant characteristics of distributed systems are: concurrency of components, lack of a global clock, and independent failure of components. Examples of distributed systems vary from SOA-based systems to massively multiplayer online games to peer-to-peer applications.',
+                    'moreCD':'Public clouds are mutually used by many users while private ones are just used by one cooperation or even just one person!',
                     'SAAS':'SAAS is...',
                     'IAAS':'IAAS is...',
                     'PAAS':'PAAS is...',
@@ -205,10 +206,10 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     #define topology, centralised, decentralised, federal, overlay, networktopology, symmetric, asymmetric, peer-to-peer, p2pv1, p2pv2
     #structured peer, unstructured peer - topologies
     #and further
-    net_arch_acro = {'SOA':'SOA - Service Oriented Architectures',
-                        'SAAS':'SAAS - ',
-                        'IAAS':'IAAS - ',
-                        'PAAS':'PAAS - '}
+    net_arch_acro = {'SOA':'SOA = Service Oriented Architectures',
+                        'SAAS':'SAAS = ',
+                        'IAAS':'IAAS = ',
+                        'PAAS':'PAAS = '}
     synonyms_client_server = ["fat server","thin server","thin client","fat client"]
     net_arch_coll = ["SAAS","IAAS","SOA","PAAS"]
 
@@ -219,8 +220,8 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
 
     if netarch in net_arch_def:
         speech = net_arch_def[netarch]
-        if addinfo == "moreC":
-            speech = net_arch_def[addinfo]
+    if addinfo == "moreC":
+        speech = net_arch_def[addinfo]
     if netcomp in net_arch_def:
         speech = net_arch_def[netcomp]
     if topo in net_arch_def:
@@ -229,17 +230,21 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     if info == "types":
         speech = net_arch_def[info]
     if info == "acronym" and netarch in net_arch_coll:
-        speech = net_arch_acro[netarch]
+        speech = net_arch_acro[netarch] + "Would you like to know more about " + netarch " ?😊"
         info = "more"
-    if info == "difference" and netarch == "cloud":
-        speech = net_arch_def['moreC']
+        addinfo = "more"
+    #check for more in order to get full explanation
+    if info == "difference" or info == "types" and netarch == "cloud":
+        speech = net_arch_def['moreCD']
 
     if netarch == "cloud":
         addinfo = "moreC"
     if topo == "overlay":
         addinfo = "moreO"
-    if topo == "peer-to-peer":
+    if topo == "peer-to-peer" and addinfo == "moreP":
         speech = "Cool! 😎 Would you like to hear about structured or unstructured peer-to-peer networks?"
+    if topo == "peer-to-peer":
+        addinfo = "moreP"
 
     contextname = "netarch_conversation"
     return {
