@@ -268,7 +268,7 @@ def serviceintent(service, addinfo, info):
     service_def = {'service':'Alright 😊 Services are a set of available functions. The details of those function, however, is hidden from higher layers. Would you like to hear more about layers or a specific service?'}
     #could add case for layers and specific services
 
-    if service in service_def:
+    if service in service_def and addinfo != "more":
         speech = service_def[service]
 
     if addinfo == "more" and service == "service":
