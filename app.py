@@ -144,6 +144,14 @@ def processRequest(req):
         service = parameters.get("Service")
         res = protocolintent(prot,info,addinfo,service)
 
+    elif req.get("result").get("action")=="service_intent":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        info = parameters.get("Information")
+        addinfo = parameters.get("addInfo")
+        service = parameters.get("Service")
+        res = serviceintent(prot,info,addinfo,service)
+
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
         #parameters = result.get("parameters")
@@ -256,7 +264,7 @@ def trigger_service():
     return{"followupEvent":{"name":"service_event","data":{" ":" "}}}
 
 
-def service_intent(service, info):
+def serviceintent(service, info):
     service_def = {'service':'Alright 😊 Services are a set of available functions. The details of those function, however, is hidden from higher layers. Would you like to hear more about layers?'}
 
     if service in service_def:
