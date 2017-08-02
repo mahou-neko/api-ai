@@ -205,7 +205,7 @@ def protocolintent(prot,info,addinfo,service):
     contextname = "protocol_conversation"
     #info = "more"
     if service == "service":
-        serviceintent(service, addinfo, info)
+        return serviceintent(service, addinfo, info)
     if addinfo == "moreAcro":
         speech = protocol_defs[prot]
         addinfo = "moreSpecific"
