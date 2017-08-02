@@ -199,6 +199,7 @@ def protocolintent(prot,info,addinfo):
 
     if addinfo == "moreAcro":
         speech = protocol_defs[prot]
+        addinfo = "moreSpecific"
         return {
         "speech": speech,
         "displayText": speech,
