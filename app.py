@@ -205,7 +205,12 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     #define topology, centralised, decentralised, federal, overlay, networktopology, symmetric, asymmetric, peer-to-peer, p2pv1, p2pv2
     #structured peer, unstructured peer - topologies
     #and further
+    net_arch_acro = {'SOA':'SOA - Service Oriented Architectures',
+                        'SAAS':'SAAS - ',
+                        'IAAS':'IAAS - ',
+                        'PAAS':'PAAS - '}
     synonyms_client_server = ["fat server","thin server","thin client","fat client"]
+    net_arch_coll = ["SAAS","IAAS","SOA","PAAS"]
 
     if topo == "topology":
         topo = "networktopology"
@@ -223,6 +228,11 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
 
     if info == "types":
         speech = net_arch_def[info]
+    if info == "acronym" and netarch in net_arch_coll:
+        speech = net_arch_acro[netarch]
+        info = "more"
+    if info == "difference" and netarch = "cloud":
+        speech = net_arch_def['moreC']
 
     if netarch == "cloud":
         addinfo = "moreC"
