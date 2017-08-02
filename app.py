@@ -237,6 +237,8 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     if topo in net_arch_def:
         speech = net_arch_def[topo]
 
+    if addinfo == "moreA" and netarch in net_arch_def:
+        speech = net_arch_def[netarch]
     if info == "types" and netarch != "client-server": #more sophisticated
         speech = net_arch_def[info]
     if info == "acronym" and netarch in net_arch_coll:
@@ -246,8 +248,6 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     #check for more in order to get full explanation
     if info == "difference" or info == "types" and netarch == "cloud":
         speech = net_arch_def['moreCD']
-    if addinfo == "moreA" and netarch in net_arch_def:
-        speech = net_arch_def[netarch]
 
     if netarch == "cloud":
         addinfo = "moreC"
