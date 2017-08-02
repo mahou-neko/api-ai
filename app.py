@@ -215,7 +215,7 @@ def protocolintent(prot,info,addinfo,service):
         "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"protocols":prot,"info":info,"addInfo":addinfo}}],
         "source": "apiai-weather-webhook-sample"
         }
-    if addinfo == "moreSpecific" and serice != "service":
+    if addinfo == "moreSpecific" and service != "service":
         speech = "I can tell you about advantages, issues, alternatives and differences of protocols. What would you like to know more about?"
         addinfo = "more"
         return {
@@ -265,7 +265,7 @@ def trigger_service():
 
 
 def serviceintent(service, addinfo, info):
-    service_def = {'service':'Alright 😊 Services are a set of available functions. The details of those function, however, is hidden from higher layers. Would you like to hear more about layers?'}
+    service_def = {'service':'Alright 😊 Services are a set of available functions. The details of those function, however, is hidden from higher layers. Would you like to hear more about layers or a specific service?'}
 
     if service in service_def:
         speech = service_def[service]
