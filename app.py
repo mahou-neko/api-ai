@@ -204,7 +204,8 @@ def protocolintent(prot,info,addinfo,service):
 
     contextname = "protocol_conversation"
     #info = "more"
-
+    if service == "service":
+        serviceintent(service, addinfo, info)
     if addinfo == "moreAcro":
         speech = protocol_defs[prot]
         addinfo = "moreSpecific"
@@ -215,7 +216,7 @@ def protocolintent(prot,info,addinfo,service):
         "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"protocols":prot,"info":info,"addInfo":addinfo}}],
         "source": "apiai-weather-webhook-sample"
         }
-    if addinfo == "moreSpecific" and service != "service":
+    if addinfo == "moreSpecific":
         speech = "I can tell you about advantages, issues, alternatives and differences of protocols. What would you like to know more about?"
         addinfo = "more"
         return {
@@ -249,8 +250,6 @@ def protocolintent(prot,info,addinfo,service):
 
     #addinfo = "more" 
     #handle even furhter information etc
-    if service == "service":
-        trigger_service()
 
     return {
         "speech": speech,
