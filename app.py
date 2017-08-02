@@ -194,7 +194,7 @@ def protocolintent(prot,info,addinfo):
                 'UDP':'There are two types of Internet Protocol (IP) traffic. They are TCP or Transmission Control Protocol and UDP or User Datagram Protocol. TCP is connection oriented – once a connection is established, data can be sent bidirectional. UDP is a simpler, connectionless Internet protocol.'}
 
     contextname = "protocol_conversation"
-    #info = "more"
+    info = "more"
     addinfo = "more"
 
     if addinfo == "moreAcro":
