@@ -150,6 +150,7 @@ def processRequest(req):
         info = parameters.get("Information")
         addinfo = parameters.get("addInfo")
         service = parameters.get("Service")
+        layer = parameters.get("layer")
         res = serviceintent(service,addinfo,info)
 
     #elif req.get("result").get("action")=="greeting":
@@ -265,9 +266,21 @@ def trigger_service():
 
 def serviceintent(service, addinfo, info):
     service_def = {'service':'Alright 😊 Services are a set of available functions. The details of those function, however, is hidden from higher layers. Would you like to hear more about layers or a specific service?'}
+    #could add case for layers and specific services
 
     if service in service_def:
         speech = service_def[service]
+
+    if addinfo == "more" and service == "service":
+        speech = "Which service would you like to know more about? 😊"
+        contextname = "service_conversation"
+        return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"service":service,"info":info,"addInfo":addinfo}}],
+        "source": "apiai-weather-webhook-sample"
+        }
 
     info = "more"
     addinfo = "more"
