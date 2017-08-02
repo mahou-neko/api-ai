@@ -265,6 +265,10 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     if topo == "peer-to-peer":
         addinfo = "moreP"
 
+    if addinfo == "moreO" or addinfo == "moreC":
+        speech = net_arch_def[addinfo]
+        addinfo = "more"
+
     contextname = "netarch_conversation"
     return {
         "speech": speech,
