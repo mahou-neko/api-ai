@@ -197,6 +197,11 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
                     'overlay':'So overlays are basically logic networks which reside on top of already existing networks (in those cases called underlays). I could tell you a bit more about them, but only if you want to 😊',
                     'moreO':'Good choice! 😁 Their topology can differ a lot from the underlays since overlay networks are pretty independent and have their own addresses and routing paths.',
                     'p2pv1':'Every node of the overlay knows k > 2 other nodes. Data gets flooded over the edges and every node contains every information.',
+                    'network':'A computer network or data network is a digital telecommunications network which allows nodes to share resources. In computer networks, networked computing devices exchange data with each other using a data link. The connections between nodes are established using either cable media or wireless media.',
+                    'client-server':'The client–server model is a distributed application structure that partitions tasks or workloads between the providers of a resource or service, called servers, and service requesters, called clients. Often clients and servers communicate over a computer network on separate hardware, but both client and server may reside in the same system. A server host runs one or more server programs which share their resources with clients. A client does not share any of its resources, but requests a servers content or service function. Clients therefore initiate communication sessions with servers which await incoming requests. Examples of computer applications that use the client–server model are Email, network printing, and the World Wide Web.',
+                    'client':'A client is a piece of computer hardware or software that accesses a service made available by a server. The server is often (but not always) on another computer system, in which case the client accesses the service by way of a network. The term applies to the role that programs or devices play in the client–server model.',
+                    'nodes':'Network computer devices that originate, route and terminate the data are called network nodes. Nodes can include hosts such as personal computers, phones, servers as well as networking hardware. Two such devices can be said to be networked together when one device is able to exchange information with the other device, whether or not they have a direct connection to each other. In most cases, application-specific communications protocols are layered (i.e. carried as payload) over other more general communications protocols. This formidable collection of information technology requires skilled network management to keep it all running reliably.',
+                    'server':'In computing, a server is a computer program or a device that provides functionality for other programs or devices, called "clients". This architecture is called the client–server model, and a single overall computation is distributed across multiple processes or devices. Servers can provide various functionalities, often called "services", such as sharing data or resources among multiple clients, or performing computation for a client. A single server can serve multiple clients, and a single client can use multiple servers. A client process may run on the same device or may connect over a network to a server on a different device. Typical servers are database servers, file servers, mail servers, print servers, web servers, game servers, and application servers.',
                     'p2pv2':'Every node contains only a small fraction of the data. Hence rare content is hard to find. This type of p2p is usually deployed via directory servers or flooding with backtracking.',
                     'dht':'Distributed Hash-Tables are a structured p2p overlay and utilizes a dynamic number of nodes. I realizes a cyclic data space and since every node knows the address of its logical successor, the complexity of searches is reduced to O(n).',
                     'unstructured':'Unstructured peer-to-peer networks do not impose a particular structure on the overlay network by design, but rather are formed by nodes that randomly form connections to each other.',
@@ -211,12 +216,15 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
                         'IAAS':'IAAS = Infrastructure As A Service',
                         'PAAS':'PAAS = Platform AS A Service'}
     synonyms_client_server = ["fat server","thin server","thin client","fat client"]
+    synonyms_topo = {"federal","symmetric","Asymmetric","centralised","decentralised"}
     net_arch_coll = ["SAAS","IAAS","SOA","PAAS"]
 
     if topo == "topology":
         topo = "networktopology"
-    if netarch == "client-server" or netcomp in synonyms_client_server: #find better solution
+    if netcomp in synonyms_client_server or (netarch == "client-server" and info == "types"): #find better solution
         netcomp = "client-server-d"
+    if topo in synonyms_topo:
+        info = "types"
 
     if netarch in net_arch_def:
         speech = net_arch_def[netarch]
@@ -230,7 +238,7 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     if info == "types": #more sophisticated
         speech = net_arch_def[info]
     if info == "acronym" and netarch in net_arch_coll:
-        speech = net_arch_acro[netarch] + "Would you like to know more about " + netarch + " ?😊"
+        speech = net_arch_acro[netarch] + " Would you like to know more about " + netarch + " ?😊"
         info = "more"
         addinfo = "more"
     #check for more in order to get full explanation
