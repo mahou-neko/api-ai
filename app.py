@@ -231,7 +231,7 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     if info == "acronym" and netarch in net_arch_coll:
         speech = net_arch_acro[netarch]
         info = "more"
-    if info == "difference" and netarch = "cloud":
+    if info == "difference" and netarch == "cloud":
         speech = net_arch_def['moreC']
 
     if netarch == "cloud":
