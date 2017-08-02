@@ -239,6 +239,13 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
 
     if addinfo == "moreA" and netarch in net_arch_def:
         speech = net_arch_def[netarch]
+        contextname = "netarch_conversation"
+        return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Network-Architectures":netarch,"Network-Components":netcomp,"Topologies":topo,"info":info,"addInfo":addinfo}}],
+        "source": "apiai-weather-webhook-sample"}
     if info == "types" and netarch != "client-server": #more sophisticated
         speech = net_arch_def[info]
     if info == "acronym" and netarch in net_arch_coll:
