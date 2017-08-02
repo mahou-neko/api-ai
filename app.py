@@ -225,6 +225,8 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
         netcomp = "client-server-d"
     if topo in synonyms_topo:
         info = "types"
+    if topo == "p2p":
+        topo = "peer-to-peer"
 
     if netarch in net_arch_def:
         speech = net_arch_def[netarch]
