@@ -141,7 +141,8 @@ def processRequest(req):
         prot = parameters.get("protocols")
         info = parameters.get("Information")
         addinfo = parameters.get("addInfo")
-        res = protocolintent(prot,info,addinfo)
+        service = parameters.get("Service")
+        res = protocolintent(prot,info,addinfo,service)
 
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
@@ -162,7 +163,7 @@ def makeYqlQuery(req):
 
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
-def protocolintent(prot,info,addinfo):
+def protocolintent(prot,info,addinfo,service):
     protocol_defs = {'protocol':'Protocols are sets of rules which give structure and meaning to exchanged messages. They are deployed for implementing Services and are usually not distinguishable for users. Would you like to know something about services?',
                     'TCP':'The Transmission Control Protocol (TCP) is one of the main protocols of the Internet protocol suite. It originated in the initial network implementation in which it complemented the Internet Protocol (IP). Therefore, the entire suite is commonly referred to as TCP/IP. TCP provides reliable, ordered, and error-checked delivery of a stream of octets between applications running on hosts communicating by an IP network. Major Internet applications such as the World Wide Web, email, remote administration, and file transfer rely on TCP.',
                     'HTTP':'The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed, collaborative, and hypermedia information systems. HTTP is the foundation of data communication for the World Wide Web. Hypertext is structured text that uses logical links (hyperlinks) between nodes containing text. HTTP is the protocol to exchange or transfer hypertext.',
@@ -240,12 +241,36 @@ def protocolintent(prot,info,addinfo):
 
     #addinfo = "more" 
     #handle even furhter information etc
+    if service == "service":
+        trigger_service()
 
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
         "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"protocols":prot,"info":info,"addInfo":addinfo}}],
+        "source": "apiai-weather-webhook-sample"
+    }
+
+def trigger_service():
+    return{"followupEvent":{"name":"service_event","data":{" ":" "}}}
+
+
+def service_intent(service, info):
+    service_def = {'service':'Alright 😊 Services are a set of available functions. The details of those function, however, is hidden from higher layers. Would you like to hear more about layers?'}
+
+    if service in service_def:
+        speech = service_def[service]
+
+    info = "more"
+    addinfo = "more"
+    contextname = "service_conversation"
+    
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"service":service,"info":info,"addInfo":addinfo}}],
         "source": "apiai-weather-webhook-sample"
     }
 
