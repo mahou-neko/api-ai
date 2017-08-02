@@ -238,7 +238,8 @@ def protocolintent(prot,info,addinfo):
     if info == "difference" and prot in prot_diff:
         speech = prot_diff[prot]
 
-    addinfo = "more" #handle even furhter information etc
+    #addinfo = "more" 
+    #handle even furhter information etc
 
     return {
         "speech": speech,
