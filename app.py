@@ -195,7 +195,6 @@ def protocolintent(prot,info,addinfo):
 
     contextname = "protocol_conversation"
     #info = "more"
-    addinfo = "more"
 
     if addinfo == "moreAcro":
         speech = protocol_defs[prot]
@@ -238,6 +237,8 @@ def protocolintent(prot,info,addinfo):
         speech = prot_alternatives(prot)
     if info == "difference" and prot in prot_diff:
         speech = prot_diff[prot]
+
+    addinfo = "more" #handle even furhter information etc
 
     return {
         "speech": speech,
