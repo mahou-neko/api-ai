@@ -150,8 +150,17 @@ def processRequest(req):
         info = parameters.get("Information")
         addinfo = parameters.get("addInfo")
         service = parameters.get("Service")
-        layer = parameters.get("layer")
         res = serviceintent(service,addinfo,info)
+
+    elif req.get("result").get("action")=="network_arch_intent":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        info = parameters.get("Information")
+        addinfo = parameters.get("addInfo")
+        netarch = parameters.get("Network-Architectures")
+        netcomp = parameters.get("Network-Components")
+        topo = parameters.get("Topologies")
+        res = netarchintent(netarch,netcomp,topo,addinfo,info)
 
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
@@ -171,6 +180,64 @@ def makeYqlQuery(req):
         return None
 
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+
+def netarchintent(netarch,netcomp,topo,addinfo,info):
+    net_arch_def = {'cloud':'Well clouds are means to deploy massive and mostly transparent distributed networks. The common use resources increases the workload and hence reduces costs. Would you like to hear more about the different types of cloud services?',
+                    'SOA':'Alright! SOA - service oriented architectures- envision to combine reusable services (which could be obtained from different providers) in order to compose a (commercial) application.',
+                    'moreC':'Awesome! 😎 The greatest distinction would be between public and private clouds. Public clouds are mutually used by many users while private ones are just used by one cooperation or even just one person!',
+                    'networktopology':'Network topology is the arrangement of the various elements (links, nodes, etc.) of a computer network. Essentially, it is the topological structure of a network and may be depicted physically or logically. Physical topology is the placement of the various components of a network, including device location and cable installation, while logical topology illustrates how data flows within a network, regardless of its physical design. Distances between nodes, physical interconnections, transmission rates, or signal types may differ between two networks, yet their topologies may be identical.',
+                    'distributed system':'A distributed system is a model in which components located on networked computers communicate and coordinate their actions by passing messages. The components interact with each other in order to achieve a common goal. Three significant characteristics of distributed systems are: concurrency of components, lack of a global clock, and independent failure of components. Examples of distributed systems vary from SOA-based systems to massively multiplayer online games to peer-to-peer applications.',
+                    'SAAS':'SAAS is...',
+                    'IAAS':'IAAS is...',
+                    'PAAS':'PAAS is...',
+                    'peer-to-peer':'Peer-to-peer (P2P) computing or networking is a distributed application architecture that partitions tasks or workloads between peers. Peers are equally privileged, equipotent participants in the application. They are said to form a peer-to-peer network of nodes. Would you like to hear more?',
+                    'client-server-d':'For distributed systems with centralised control there are a few network designs which rank between two extremes: thin clients with fat servers (meaning that the client side is less computationally and storage wise exerted) and the exact contrary with a fat client (which does all the heavy lifting) and a thin server.',
+                    'types':'There are centralised, federal and decentralised topologies for distributed systems. Centralised ones are on the end of the asymmetric scale while decentralised ones are more prone to be symmetric.',
+                    'overlay':'So overlays are basically logic networks which reside on top of already existing networks (in those cases called underlays). I could tell you a bit more about them, but only if you want to 😊',
+                    'moreO':'Good choice! 😁 Their topology can differ a lot from the underlays since overlay networks are pretty independent and have their own addresses and routing paths.',
+                    'p2pv1':'Every node of the overlay knows k > 2 other nodes. Data gets flooded over the edges and every node contains every information.',
+                    'p2pv2':'Every node contains only a small fraction of the data. Hence rare content is hard to find. This type of p2p is usually deployed via directory servers or flooding with backtracking.',
+                    'dht':'Distributed Hash-Tables are a structured p2p overlay and utilizes a dynamic number of nodes. I realizes a cyclic data space and since every node knows the address of its logical successor, the complexity of searches is reduced to O(n).',
+                    'unstructured':'Unstructured peer-to-peer networks do not impose a particular structure on the overlay network by design, but rather are formed by nodes that randomly form connections to each other.',
+                    'structured':'In structured peer-to-peer networks the overlay is organized into a specific topology, and the protocol ensures that any node can efficiently search the network for a file/resource, even if the resource is extremely rare.'}
+    #define SOA, cloud, SAAS, IAAS, PAAS, client-server, distributed system - network arch
+    #define network, client, server, thin client, thin server, fat server, fat client - network components
+    #define topology, centralised, decentralised, federal, overlay, networktopology, symmetric, asymmetric, peer-to-peer, p2pv1, p2pv2
+    #structured peer, unstructured peer - topologies
+    #and further
+
+    if topo == "topology":
+        topo = "networktopology"
+    if netarch == "client-server" or netcomp == "thin client" or netcomp == "client-server" or netcomp == "fat client": #find better solution
+        netcomp = "client-server-d"
+
+    if netarch in net_arch_def:
+        speech = net_arch_def[netarch]
+        if addinfo == "moreC":
+            speech = net_arch_def[addinfo]
+    if netcomp in net_arch_def:
+        speech = net_arch_def[netcomp]
+    if topo in net_arch_def:
+        speech = net_arch_def[topo]
+
+    if info == "types":
+        speech = net_arch_def[info]
+
+    if netarch == "cloud":
+        addinfo = "moreC"
+    if topo == "overlay":
+        addinfo = "moreO"
+    if topo == "peer-to-peer":
+        speech = "Cool! 😎 Would you like to hear about structured or unstructured peer-to-peer networks?"
+
+    contextname = "netarch_conversation"
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"Network-Architectures":netarch,"Network-Components":netcomp,"Topologies":topo,"info":info,"addInfo":addinfo}}],
+        "source": "apiai-weather-webhook-sample"
+    }
 
 def protocolintent(prot,info,addinfo,service):
     protocol_defs = {'protocol':'Protocols are sets of rules which give structure and meaning to exchanged messages. They are deployed for implementing Services and are usually not distinguishable for users. Would you like to know something about services?',
@@ -267,7 +334,7 @@ def trigger_service():
 def serviceintent(service, addinfo, info):
     service_def = {'service':'Alright 😊 Services are a set of available functions. The details of those function, however, is hidden from higher layers. Would you like to hear more about layers or a specific service?',
                     'SOA':'Alright! SOA - service oriented architectures- envision to combine reusable services (which could be obtained from different providers) in order to compose a (commercial) application.'}
-    #could add case for layers and specific services
+    #could add case for layers and specific services and expand with hear more
 
     if service in service_def and addinfo != "more":
         speech = service_def[service]
