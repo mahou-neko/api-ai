@@ -235,7 +235,7 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     if topo in net_arch_def:
         speech = net_arch_def[topo]
 
-    if info == "types": #more sophisticated
+    if info == "types" and netarch != "client-server": #more sophisticated
         speech = net_arch_def[info]
     if info == "acronym" and netarch in net_arch_coll:
         speech = net_arch_acro[netarch] + " Would you like to know more about " + netarch + " ?😊"
