@@ -205,10 +205,11 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     #define topology, centralised, decentralised, federal, overlay, networktopology, symmetric, asymmetric, peer-to-peer, p2pv1, p2pv2
     #structured peer, unstructured peer - topologies
     #and further
+    synonyms_client_server = ["fat server","thin server","thin client","fat client"]
 
     if topo == "topology":
         topo = "networktopology"
-    if netarch == "client-server" or netcomp == "thin client" or netcomp == "client-server" or netcomp == "fat client": #find better solution
+    if netarch == "client-server" or netcomp in synonyms_client_server: #find better solution
         netcomp = "client-server-d"
 
     if netarch in net_arch_def:
