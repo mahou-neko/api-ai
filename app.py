@@ -188,9 +188,9 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
                     'networktopology':'Network topology is the arrangement of the various elements (links, nodes, etc.) of a computer network. Essentially, it is the topological structure of a network and may be depicted physically or logically. Physical topology is the placement of the various components of a network, including device location and cable installation, while logical topology illustrates how data flows within a network, regardless of its physical design. Distances between nodes, physical interconnections, transmission rates, or signal types may differ between two networks, yet their topologies may be identical.',
                     'distributed system':'A distributed system is a model in which components located on networked computers communicate and coordinate their actions by passing messages. The components interact with each other in order to achieve a common goal. Three significant characteristics of distributed systems are: concurrency of components, lack of a global clock, and independent failure of components. Examples of distributed systems vary from SOA-based systems to massively multiplayer online games to peer-to-peer applications.',
                     'moreCD':'Public clouds are mutually used by many users while private ones are just used by one cooperation or even just one person!',
-                    'SAAS':'SAAS is...',
-                    'IAAS':'IAAS is...',
-                    'PAAS':'PAAS is...',
+                    'SAAS':'In the software as a service (SaaS) model, users gain access to application software and databases. Cloud providers manage the infrastructure and platforms that run the applications. SaaS is sometimes referred to as "on-demand software" and is usually priced on a pay-per-use basis or using a subscription fee.[86] In the SaaS model, cloud providers install and operate application software in the cloud and cloud users access the software from cloud clients. Cloud users do not manage the cloud infrastructure and platform where the application runs. This eliminates the need to install and run the application on the cloud users own computers, which simplifies maintenance and support. Cloud applications differ from other applications in their scalability—which can be achieved by cloning tasks onto multiple virtual machines at run-time to meet changing work demand. Load balancers distribute the work over the set of virtual machines. This process is transparent to the cloud user, who sees only a single access-point. To accommodate a large number of cloud users, cloud applications can be multitenant, meaning that any machine may serve more than one cloud-user organization.',
+                    'IAAS':'According to the Internet Engineering Task Force (IETF), the most basic cloud-service model is that of providers offering computing infrastructure – virtual machines and other resources – as a service to subscribers. Infrastructure as a service (IaaS) refers to online services that provide high-level APIs used to dereference various low-level details of underlying network infrastructure like physical computing resources, location, data partitioning, scaling, security, backup etc. A hypervisor, such as Xen, Oracle VirtualBox, Oracle VM, KVM, VMware ESX/ESXi, or Hyper-V, LXD, runs the virtual machines as guests. Pools of hypervisors within the cloud operational system can support large numbers of virtual machines and the ability to scale services up and down according to customers varying requirements.',
+                    'PAAS':'PaaS vendors offer a development environment to application developers. The provider typically develops toolkit and standards for development and channels for distribution and payment. In the PaaS models, cloud providers deliver a computing platform, typically including operating system, programming-language execution environment, database, and web server. Application developers can develop and run their software solutions on a cloud platform without the cost and complexity of buying and managing the underlying hardware and software layers. With some PaaS offers like Microsoft Azure and Google App Engine, the underlying computer and storage resources scale automatically to match application demand so that the cloud user does not have to allocate resources manually. The latter has also been proposed by an architecture aiming to facilitate real-time in cloud environments.',
                     'peer-to-peer':'Peer-to-peer (P2P) computing or networking is a distributed application architecture that partitions tasks or workloads between peers. Peers are equally privileged, equipotent participants in the application. They are said to form a peer-to-peer network of nodes. Would you like to hear more?',
                     'client-server-d':'For distributed systems with centralised control there are a few network designs which rank between two extremes: thin clients with fat servers (meaning that the client side is less computationally and storage wise exerted) and the exact contrary with a fat client (which does all the heavy lifting) and a thin server.',
                     'types':'There are centralised, federal and decentralised topologies for distributed systems. Centralised ones are on the end of the asymmetric scale while decentralised ones are more prone to be symmetric.',
@@ -207,9 +207,9 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     #structured peer, unstructured peer - topologies
     #and further
     net_arch_acro = {'SOA':'SOA = Service Oriented Architectures',
-                        'SAAS':'SAAS = ',
-                        'IAAS':'IAAS = ',
-                        'PAAS':'PAAS = '}
+                        'SAAS':'SAAS = Software AS A Service',
+                        'IAAS':'IAAS = Infrastructure As A Service',
+                        'PAAS':'PAAS = Platform AS A Service'}
     synonyms_client_server = ["fat server","thin server","thin client","fat client"]
     net_arch_coll = ["SAAS","IAAS","SOA","PAAS"]
 
@@ -227,7 +227,7 @@ def netarchintent(netarch,netcomp,topo,addinfo,info):
     if topo in net_arch_def:
         speech = net_arch_def[topo]
 
-    if info == "types":
+    if info == "types": #more sophisticated
         speech = net_arch_def[info]
     if info == "acronym" and netarch in net_arch_coll:
         speech = net_arch_acro[netarch] + "Would you like to know more about " + netarch + " ?😊"
