@@ -264,7 +264,7 @@ def trigger_service():
     return{"followupEvent":{"name":"service_event","data":{" ":" "}}}
 
 
-def serviceintent(service, info):
+def serviceintent(service, addinfo, info):
     service_def = {'service':'Alright 😊 Services are a set of available functions. The details of those function, however, is hidden from higher layers. Would you like to hear more about layers?'}
 
     if service in service_def:
