@@ -564,7 +564,10 @@ def layerintent(layer, info, addinfo):
         speech = layerdef[layer] + " Would you like to hear more? ☺️" 
         if layer == "layer" and addinfo == "more":
             speech = "Great! Would you like to hear more about osi layers or tcp/ip layers?"
-            addinfo = " "
+            addinfo = ""
+        if addinfo == "more" and layer != "layer":
+            speech = "Awesome ☺️ What would you like to know more about the " + layer +"?"
+
         contextname = "layer_conversation"
     elif layer in layermodel:
         speech = layermodel[layer] + " Shall I tell you more about the layers of the specific model? ☺️" #add for yes followup custom hear more
@@ -578,7 +581,7 @@ def layerintent(layer, info, addinfo):
         contextname = "layer_model"
         if info == "difference":
             contextname = "layer_more" #expand this! and be carful with context -> reset!
-    
+
     addinfo = "more"
     if info == "more":
         speech = "Okay! Here comes more about the " + layer + " 😎"
