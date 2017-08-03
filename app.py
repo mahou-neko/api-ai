@@ -525,9 +525,9 @@ def modelintent(model,info,addinfo):
             }
     if info == "more":
         if model == "TCP/IP": #set different context
-            return layerintent("tcpip-layers","general") #reset models followup for it to work with layers
+            return layerintent("tcpip-layers","general"," "," ") #reset models followup for it to work with layers
         elif model == "OSI":
-            return layerintent("osi-layers","general")
+            return layerintent("osi-layers","general"," "," ")
         elif model == "model":
             speech = "Which one would you like to hear more about? 😎"
     if info == "difference":
