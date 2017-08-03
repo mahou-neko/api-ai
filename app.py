@@ -116,7 +116,8 @@ def processRequest(req):
         parameters = result.get("parameters")
         layer = parameters.get("layer")
         info = parameters.get("Information")
-        res = layerintent(layer,info)
+        addinfo = parameters.get("addInfo")
+        res = layerintent(layer,info,addinfo)
 
     elif req.get("result").get("action")=="model_intent":
         result = req.get("result")
@@ -538,7 +539,7 @@ def modelintent(model,info,addinfo):
         "source": "apiai-weather-webhook-sample"
     }
 
-def layerintent(layer, info):
+def layerintent(layer, info, addinfo):
     layerdef = {'physical layer':'The physical layer handels mechanical and electrical/optical linkage. It converts logical symbols into electrical(optical) ones and measures optical signals to reconstruct logical symbols', 
     'data link layer':'Got it! ☺️ The data link layer covers transmission errors and handels media access. \n It is also concerned with congestion control.', 
     'network layer':'On the network layer paths from senders to recipients are chosen. Hence this layer also has to cope with heterogenius subnets and is responsibe for accounting.',
@@ -559,10 +560,13 @@ def layerintent(layer, info):
                     'difference':'When it comes to general reliability, TCP/IP is considered to be a more reliable option as opposed to OSI model. The OSI model is, in most cases, referred to as a reference tool, being the older of the two models. OSI is also known for its strict protocol and boundaries. This is not the case with TCP/IP. It allows for a loosening of the rules, provided the general guidelines are met. Would you like to hear more?',
                     'more':'When it comes to the communications, TCP/IP supports only connectionless communication emanating from the network layer. OSI, on the other hand, seems to do quite well, supporting both connectionless and connection-oriented communication within the network layer. Last but not least is the protocol dependency of the two. TCP/IP is a protocol dependent model, whereas OSI is a protocol independent standard.'}
 
+    addinfo = "more"
+
     if layer in layerdef:
         speech = layerdef[layer] + " Would you like to hear more? ☺️" 
-        if layer == "layer":
+        if layer == "layer" and addinfo == "more":
             speech = "Great! Would you like to hear more about osi layers or tcp/ip layers?"
+            addinfo = " "
         contextname = "layer_conversation"
     elif layer in layermodel:
         speech = layermodel[layer] + " Shall I tell you more about the layers of the specific model? ☺️" #add for yes followup custom hear more
@@ -581,12 +585,11 @@ def layerintent(layer, info):
         speech = "Okay! Here comes more about the " + layer + " 😎"
         #could set context here for spevific more for looping information
         #should be in its own more function
-
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer,"info":info}},{"name":"Layer-followup","lifespan":3,"parameters":{}}],
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer,"info":info,"addInfo":addinfo}},{"name":"Layer-followup","lifespan":3,"parameters":{}}],
         "source": "apiai-weather-webhook-sample"
     }
 
