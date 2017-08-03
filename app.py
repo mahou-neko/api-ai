@@ -334,7 +334,7 @@ def protocolintent(prot,info,addinfo,service):
         }
     if addinfo == "moreSpecific":
         speech = "I can tell you about advantages, issues, alternatives and differences of protocols. What would you like to know more about?"
-        if prot = "protocol":
+        if prot == "protocol":
             speech = "Which protocol would you like to hear more about?"
         addinfo = "more"
         return {
