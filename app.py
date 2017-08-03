@@ -581,6 +581,10 @@ def layerintent(layer, info, addinfo):
         contextname = "layer_model"
         if info == "difference":
             contextname = "layer_more" #expand this! and be carful with context -> reset!
+    if model == "OSI":
+        speech = layermodel['osi-layers']
+    if model == "TCP/IP":
+        speech = layermodel['tcpip-layers']
 
     addinfo = "more"
     if info == "more":
