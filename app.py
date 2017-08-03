@@ -117,7 +117,8 @@ def processRequest(req):
         layer = parameters.get("layer")
         info = parameters.get("Information")
         addinfo = parameters.get("addInfo")
-        res = layerintent(layer,info,addinfo)
+        model = parameters.get("Models")
+        res = layerintent(layer,info,addinfo,model)
 
     elif req.get("result").get("action")=="model_intent":
         result = req.get("result")
@@ -539,7 +540,7 @@ def modelintent(model,info,addinfo):
         "source": "apiai-weather-webhook-sample"
     }
 
-def layerintent(layer, info, addinfo):
+def layerintent(layer, info, addinfo, model):
     layerdef = {'physical layer':'The physical layer handels mechanical and electrical/optical linkage. It converts logical symbols into electrical(optical) ones and measures optical signals to reconstruct logical symbols', 
     'data link layer':'Got it! ☺️ The data link layer covers transmission errors and handels media access. \n It is also concerned with congestion control.', 
     'network layer':'On the network layer paths from senders to recipients are chosen. Hence this layer also has to cope with heterogenius subnets and is responsibe for accounting.',
@@ -582,9 +583,11 @@ def layerintent(layer, info, addinfo):
         if info == "difference":
             contextname = "layer_more" #expand this! and be carful with context -> reset!
     if model == "OSI":
-        speech = layermodel['osi-layers']
+        speech = layermodel['osi-layers'] #reset context
+        model = " "
     if model == "TCP/IP":
         speech = layermodel['tcpip-layers']
+        model = " "
 
     addinfo = "more"
     if info == "more":
@@ -595,7 +598,7 @@ def layerintent(layer, info, addinfo):
         "speech": speech,
         "displayText": speech,
         # "data": data,
-        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer,"info":info,"addInfo":addinfo}},{"name":"Layer-followup","lifespan":3,"parameters":{}}],
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"layer":layer,"info":info,"addInfo":addinfo,"Models":model}},{"name":"Layer-followup","lifespan":3,"parameters":{}}],
         "source": "apiai-weather-webhook-sample"
     }
 
