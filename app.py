@@ -20,6 +20,11 @@ from flask import make_response
 # Flask app should start in global layout
 app = Flask(__name__)
 
+graphenedb_url = os.environ.get("GRAPHENEDB_BOLT_URL")
+graphenedb_user = os.environ.get("GRAPHENEDB_BOLT_USER")
+graphenedb_pass = os.environ.get("GRAPHENEDB_BOLT_PASSWORD")
+
+driver = GraphDatabase.driver(graphenedb_url, auth=basic_auth(graphenedb_user, graphenedb_pass))
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -38,8 +43,10 @@ def webhook():
 
 
 def processRequest(req):
-    driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "chattyCat"))
     session = driver.session()
+
+    session.run("CREATE (p:Protocol {name: {name}, acronym: {acronym}, description: {description}})",
+                      name="Transmission Control Protocol", acronym= "TCP", description = "The Transmission Control Protocol (TCP) is one of the main protocols of the Internet protocol suite. It originated in the initial network implementation in which it complemented the Internet Protocol (IP). Therefore, the entire suite is commonly referred to as TCP/IP. TCP provides reliable, ordered, and error-checked delivery of a stream of octets between applications running on hosts communicating by an IP network. Major Internet applications such as the World Wide Web, email, remote administration, and file transfer rely on TCP.")
 
     if req.get("result").get("action")=="yahooWeatherForecast":
         baseurl = "https://query.yahooapis.com/v1/public/yql?"
