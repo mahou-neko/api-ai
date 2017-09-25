@@ -201,7 +201,7 @@ def makeYqlQuery(req):
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
 def query_test(topic, session):
-    result = session.run("MATCH (p:Protocol {acronym: {name}}) RETURN p.name AS name, p.description AS description", name=topic)
+    result = session.run("MATCH (p:Protocol {acronym: {name}}) RETURN p.name AS name, p.description AS description", name='TCP')
     speech = ""
     for record in result:
         speech = record["description"]
