@@ -11,6 +11,8 @@ from urllib.error import HTTPError
 import json
 import os
 
+from neo4j.v1 import GraphDatabase, basic_auth
+
 from flask import Flask
 from flask import request
 from flask import make_response
@@ -36,6 +38,8 @@ def webhook():
 
 
 def processRequest(req):
+    driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "chattyCat"))
+    session = driver.session()
 
     if req.get("result").get("action")=="yahooWeatherForecast":
         baseurl = "https://query.yahooapis.com/v1/public/yql?"
@@ -164,6 +168,11 @@ def processRequest(req):
         netcomp = parameters.get("Network-Components")
         topo = parameters.get("Topologies")
         res = netarchintent(netarch,netcomp,topo,addinfo,info)
+    elif req.get("result").get("action")=="query_test":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        topic = parameters.get("protocols")
+        res = query_test(topic,session)
 
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
@@ -183,6 +192,20 @@ def makeYqlQuery(req):
         return None
 
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+
+def query_test(topic, session):
+    result = session.run("MATCH (p:Protocol {acronym: {name}}) RETURN p.name AS name, p.description AS description", name=topic)
+    speech = ""
+    for record in result:
+        speech = record["description"]
+    contextname = "test"
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"topic":topic}}],
+        "source": "apiai-weather-webhook-sample"
+    }
 
 def netarchintent(netarch,netcomp,topo,addinfo,info):
     net_arch_def = {'cloud':'Well clouds are means to deploy massive and mostly transparent distributed networks. The common use resources increases the workload and hence reduces costs. Would you like to hear more about the different types of cloud services?',
