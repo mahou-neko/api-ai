@@ -209,7 +209,7 @@ def test(topic, session):
     return {
         "speech": speech,
         "displayText": speech,
-        "data": data,
+        #"data": data,
         "contextOut": [{"name":contextname,"lifespan":3,"parameters":{"topic":topic}}],
         "source": "apiai-weather-webhook-sample"
     }
