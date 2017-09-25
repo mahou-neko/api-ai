@@ -20,12 +20,6 @@ from flask import make_response
 # Flask app should start in global layout
 app = Flask(__name__)
 
-graphenedb_url = os.environ.get("GRAPHENEDB_BOLT_URL")
-graphenedb_user = os.environ.get("GRAPHENEDB_BOLT_USER")
-graphenedb_pass = os.environ.get("GRAPHENEDB_BOLT_PASSWORD")
-
-driver = GraphDatabase.driver(graphenedb_url, auth=basic_auth(graphenedb_user, graphenedb_pass))
-
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
@@ -43,6 +37,11 @@ def webhook():
 
 
 def processRequest(req):
+    graphenedb_url = os.environ.get("GRAPHENEDB_BOLT_URL")
+    graphenedb_user = os.environ.get("GRAPHENEDB_BOLT_USER")
+    graphenedb_pass = os.environ.get("GRAPHENEDB_BOLT_PASSWORD")
+
+    driver = GraphDatabase.driver(graphenedb_url, auth=basic_auth(graphenedb_user, graphenedb_pass))
     session = driver.session()
 
     session.run("MATCH (p:Protocol) DELETE p")
@@ -203,9 +202,9 @@ def makeYqlQuery(req):
 
 def test(topic, session):
     result = session.run("MATCH (p:Protocol {acronym: {a}}) RETURN p.name AS name, p.description AS description", a="TCP")
-    speech = ""
+    speech = " "
     for record in result:
-        speech = record["description"]
+        speech += record["name"]
     contextname = "test"
     return {
         "speech": speech,
