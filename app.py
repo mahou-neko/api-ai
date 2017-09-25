@@ -45,6 +45,7 @@ def webhook():
 def processRequest(req):
     session = driver.session()
 
+    session.run("MATCH (p:Protocol) DELETE p")
     session.run("CREATE (p:Protocol {name: {name}, acronym: {acronym}, description: {description}})",
                       name="Transmission Control Protocol", acronym= "TCP", description = "The Transmission Control Protocol (TCP) is one of the main protocols of the Internet protocol suite. It originated in the initial network implementation in which it complemented the Internet Protocol (IP). Therefore, the entire suite is commonly referred to as TCP/IP. TCP provides reliable, ordered, and error-checked delivery of a stream of octets between applications running on hosts communicating by an IP network. Major Internet applications such as the World Wide Web, email, remote administration, and file transfer rely on TCP.")
 
@@ -175,11 +176,11 @@ def processRequest(req):
         netcomp = parameters.get("Network-Components")
         topo = parameters.get("Topologies")
         res = netarchintent(netarch,netcomp,topo,addinfo,info)
-    elif req.get("result").get("action")=="query_test":
+    elif req.get("result").get("action")=="test":
         result = req.get("result")
         parameters = result.get("parameters")
         topic = parameters.get("protocols")
-        res = query_test(topic,session)
+        res = test(topic,session)
 
     #elif req.get("result").get("action")=="greeting":
         #result = req.get("result")
@@ -200,8 +201,8 @@ def makeYqlQuery(req):
 
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
-def query_test(topic, session):
-    result = session.run("MATCH (p:Protocol {acronym: {name}}) RETURN p.name AS name, p.description AS description", name='TCP')
+def test(topic, session):
+    result = session.run("MATCH (p:Protocol {acronym: {a}}) RETURN p.name AS name, p.description AS description", a="TCP")
     speech = ""
     for record in result:
         speech = record["description"]
